@@ -7,6 +7,11 @@ import Home from "../pages/home";
 import Contact from "../pages/contact";
 import NewsDetail from "../pages/newsDetail";
 import News from "../pages/news";
+import Rundstykker from "../pages/rundstykker";
+import Baguettes from "../pages/baguettes";
+import Franskbrød from "../pages/franskbrød";
+import Kager from "../pages/kager";
+import Rugbrød from "../pages/Rugbrød";
 
 const AppRoutes = () => {
   return (
@@ -21,7 +26,13 @@ const AppRoutes = () => {
           <Route path="/user" element={<UserPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/news" element={<News />} />
-          <Route path="/news/:id" element={<NewsDetail />} /> {/* Add this dynamic route */}
+          <Route path="/news/:id" element={<NewsDetail />} />
+          <Route path="/rundstykker" element={<Rundstykker />} />
+          <Route path="/baguettes" element={<Baguettes />} />
+          <Route path="/franskbrød" element={<Franskbrød />} />
+          <Route path="/kager" element={<Kager />} />
+          <Route path="/rugbrød" element={<Rugbrød />} />
+
         </Route>
       </Routes>
     </Router>
