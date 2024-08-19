@@ -14,17 +14,14 @@ const Header = () => {
   const isHomePage = location.pathname === "/home";
 
   useEffect(() => {
-    // Only start the automatic background change if the user is on the home page
-    if (isHomePage) {
-      const interval = setInterval(() => {
-        setCurrentImageIndex((prevIndex) =>
-          prevIndex === images.length - 1 ? 0 : prevIndex + 1
-        );
-      }, 10000); // Change image every 10 seconds
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 10000); // Change image every 10 seconds
 
-      return () => clearInterval(interval);
-    }
-  }, [isHomePage]);
+    return () => clearInterval(interval);
+  }, []);
 
   // Handle radio button change
   const handleRadioChange = (index) => {
@@ -52,11 +49,11 @@ const Header = () => {
 
       {isHomePage && (
         <div>
-            <Nyheder />
+          <Nyheder />
           <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
             <div className="flex justify-center space-x-4">
               {images.map((_, index) => (
-                <label key={index}>
+                <label key={index} className="relative">
                   <input
                     type="radio"
                     name="background"
@@ -67,8 +64,8 @@ const Header = () => {
                   <span
                     className={`inline-block w-8 h-8 rounded-full cursor-pointer ${
                       currentImageIndex === index
-                        ? "bg-white border border-gray-400"
-                        : "bg-gray-400"
+                        ? "bg-black border border-black"
+                        : "bg-gray-400 border border-black hover:bg-gray-500"
                     }`}
                   ></span>
                 </label>

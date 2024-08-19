@@ -11,7 +11,7 @@ const formatDate = (dateString) => {
 const Nyheder = () => {
   const { news, error, loading } = useNews();
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl">Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   // Limit news to a maximum of 2
@@ -20,7 +20,7 @@ const Nyheder = () => {
   return (
     <div className="flex flex-col h-full ml-24">
       <h1 className="text-5xl py-4 mt-8">Nyheder</h1>
-      <div className="w-[721px] h-[527px] bg-[#323540] bg-opacity-80">
+      <div className="w-[721px] h-[527px] bg-[#323540] bg-opacity-80 rounded-lg">
         <ul>
           {limitedNews.map((item) => {
             const imageUrl = item.imageFilename
