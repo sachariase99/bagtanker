@@ -2,6 +2,12 @@ import { useParams, Link } from "react-router-dom";
 import useNews from "../hooks/useNews";
 import News from "./news";
 
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const options = { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' };
+  return date.toLocaleDateString('da-DK', options); // Format the date in Danish locale
+};
+
 const NewsDetail = () => {
   const { id } = useParams();
   const { news, error, loading } = useNews();
@@ -28,7 +34,7 @@ const NewsDetail = () => {
     return chunks;
   };
 
-  // Split the content into chunks of 3 lines (for more chunks)
+  // Split the content into chunks of 3 lines
   const contentChunks = splitContentIntoChunks(selectedNews.content, 3);
 
   return (
@@ -39,7 +45,7 @@ const NewsDetail = () => {
         </p>
         <h2 className="text-4xl font-bold mb-4 mt-8">{selectedNews.title}</h2>
         <p className="font-thin text-base leading-none">
-          {selectedNews.created_at}
+          {formatDate(selectedNews.created_at)}
         </p>
         {selectedNews.imageFilename && (
           <img
