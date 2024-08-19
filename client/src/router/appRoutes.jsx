@@ -1,15 +1,18 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "../layout/layout";
-import LoginPage from "../components/login";
-import UserPage from "../components/user";
-import RegisterPage from "../components/register";
+import LoginPage from "../pages/login";
+import UserPage from "../pages/user";
+import RegisterPage from "../pages/register";
+import Home from "../pages/home";
 
 const AppRoutes = () => {
   return (
     <Router>
       <Routes>
-        {/* Pass the Layout component directly without JSX syntax */}
         <Route path="/" element={<Layout />}>
+          {/* Redirect from "/" to "/home" */}
+          <Route index element={<Navigate to="/home" />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/user" element={<UserPage />} />
