@@ -1,10 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/authContext"; // Adjust the path according to your project structure
 
 const Burgermenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
   const location = useLocation();
+  const { isLoggedIn } = useContext(AuthContext); // Get authentication state from context
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -70,7 +73,11 @@ const Burgermenu = () => {
                 <Link to="/contact">Kontakt</Link>
               </li>
               <li className="mb-4">
-                <Link to="/login">Login</Link>
+                {isLoggedIn ? (
+                  <Link to="/user">Profil</Link>
+                ) : (
+                  <Link to="/login">Login</Link>
+                )}
               </li>
             </ul>
           </nav>
