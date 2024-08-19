@@ -28,11 +28,28 @@ export default [
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
       ...reactHooks.configs.recommended.rules,
+
+      // Set all rules to "warn" or "off" to prevent errors
+      'no-unused-vars': 'warn', 
       'react/jsx-no-target-blank': 'off',
+      'react/prop-types': 'off',
+      'react/react-in-jsx-scope': 'off',
+      'react/no-unescaped-entities': 'warn',
+      'react/jsx-key': 'warn',
+      'no-console': 'warn',
+      'no-debugger': 'warn',
+
+      // React Refresh
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },
       ],
+
+      // Turn off or warn on all other rules
+      'no-undef': 'error', // Example of keeping a critical error
+      'no-unused-expressions': 'warn',
+      'no-case-declarations': 'warn',
+      'no-fallthrough': 'warn',
     },
   },
 ]

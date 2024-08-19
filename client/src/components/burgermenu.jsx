@@ -1,12 +1,33 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const Burgermenu = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef(null);
+  const location = useLocation();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  // Close menu if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // Close menu on route change
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location]);
 
   return (
     <>
@@ -21,6 +42,7 @@ const Burgermenu = () => {
       </button>
       {/* Slide-in Menu */}
       <div
+        ref={menuRef}
         className={`fixed top-0 right-0 h-full w-[425px] bg-gray-800 bg-opacity-90 text-white transform ${
           isOpen ? "translate-x-0" : "translate-x-full"
         } transition-transform duration-300 ease-in-out z-[2]`}
@@ -42,10 +64,10 @@ const Burgermenu = () => {
                 <Link to="/">Produkter</Link>
               </li>
               <li className="mb-4">
-                <Link to="/">Nyheder</Link>
+                <Link to="/news">Nyheder</Link>
               </li>
               <li className="mb-4">
-                <Link to="/">Kontakt</Link>
+                <Link to="/contact">Kontakt</Link>
               </li>
               <li className="mb-4">
                 <Link to="/login">Login</Link>

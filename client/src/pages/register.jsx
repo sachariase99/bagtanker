@@ -36,19 +36,19 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="w-full">
-      <div className="w-[500px] mx-64">
-        <p className="mt-4">
+    <div>
+      <div className="w-[500px]">
+        <p>
           Du er her: <Link to="/">Home</Link> / <Link to="/register">Registrer</Link>
         </p>
-        <h2 className="text-4xl font-bold mb-4 mt-8">Login</h2>
+        <h2 className="text-4xl font-bold mb-4 mt-8">Registrer</h2>
         <p className="text-base mb-3">
           Indtast og send email og password for at registrere
         </p>
         <form onSubmit={handleRegister} className="flex flex-col">
           {error && <p style={{ color: "red" }}>{error}</p>}
           {successMessage && (
-            <p className="text-green absolute top-2 left-1/2 -translate-x-1/2 bg-[#c2c2c2] py-2 px-4">
+            <p className="text-green absolute top-2 left-1/2 -translate-x-1/2 bg-[#c2c2c2] py-2 px-4 z-50">
               {successMessage}
             </p>
           )}
@@ -69,7 +69,7 @@ const RegisterPage = () => {
             required
             minLength="6"
             placeholder="Indtast dit password"
-            className="bg-[#ececec] px-8 py-4 w-full mb-2 outline-none rounded-lg"
+            className="bg-[#ececec] px-8 py-4 w-full outline-none rounded-lg"
           />
           <div className="flex justify-end items-center mt-6">
             <p>
@@ -80,7 +80,7 @@ const RegisterPage = () => {
             </p>
             <button
               type="submit"
-              className="bg-[#5F567B] justify-start py-[7px] px-[57px] ml-3 uppercase font-bold rounded-lg text-lg text-white"
+              className="bg-[#5F567B] justify-start py-[7px] px-[57px] ml-3 uppercase font-light rounded-lg text-lg text-white"
             >
               Registrer
             </button>

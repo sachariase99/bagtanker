@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import images from "../assets/bg-images"; // Import your background images array
 import Home from "../pages/home";
 import Logo from "../assets/logo.png";
 import Burgermenu from "./burgermenu";
-import Nyheder from "./nyheder";
+import NewsHome from "./newsHome";
 
 const Header = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -49,7 +49,7 @@ const Header = () => {
 
       {isHomePage && (
         <div>
-          <Nyheder />
+          <NewsHome />
           <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
             <div className="flex justify-center space-x-4">
               {images.map((_, index) => (

@@ -11,7 +11,6 @@ const useNews = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        console.log('Fetching news...');
         setLoading(true);
 
         // Fetch news items
@@ -71,8 +70,6 @@ const useNews = () => {
 
     fetchNews();
   }, [supabase]);
-
-  console.log('useNews hook called:', { news, error, loading });
 
   return { news, error, loading };
 };

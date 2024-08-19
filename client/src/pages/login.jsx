@@ -7,7 +7,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const { isLoggedIn, login, logout } = useContext(AuthContext);
+  const { isLoggedIn, login } = useContext(AuthContext);
   const navigate = useNavigate(); // Initialize useNavigate
 
   // Destructure the supabase instance from the useSupabase hook
@@ -40,9 +40,9 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="w-full">
-      <div className="w-[500px] mx-64">
-        <p className="mt-4">Du er her: <Link to="/">Home</Link> / <Link to="/login">Login</Link></p>
+    <div>
+      <div className="w-[500px]">
+        <p>Du er her: <Link to="/">Home</Link> / <Link to="/login">Login</Link></p>
         <h2 className="text-4xl font-bold mb-4 mt-8">Login</h2>
         <p className="text-base mb-3">
           Indtast og send email og password for at logge ind
@@ -74,7 +74,7 @@ const LoginPage = () => {
             </p>
             <button
               type="submit"
-              className="bg-[#5F567B] justify-start py-[7px] px-[57px] ml-3 uppercase font-bold rounded-lg text-lg text-white"
+              className="bg-[#5F567B] justify-start py-[7px] px-[57px] ml-3 uppercase font-light rounded-lg text-lg text-white"
             >
               Log in
             </button>
