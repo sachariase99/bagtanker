@@ -20,12 +20,15 @@ const News = () => {
     );
   if (error) return <p>Error: {error}</p>;
 
+  // Sort news by date in descending order
+  const sortedNews = news.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
   return (
     <div className="flex flex-col items-end">
       <div className="w-[329px] min-h-screen bg-[#F5F5F0] rounded-b-lg">
         <div className="text-[22px] bg-[#5f657b] text-white px-4 py-4 rounded-t-lg">Se også...</div>
         <ul>
-          {news.map((item) => {
+          {sortedNews.map((item) => {
             // Determine if the item is the current one
             const isActive = currentPath === `/news/${item.id}`;
 
