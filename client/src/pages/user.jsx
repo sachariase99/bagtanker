@@ -17,7 +17,7 @@ const UserPage = () => {
       <div className="flex justify-between">
         <p>
           Du er her: <Link to="/">Home</Link> /{" "}
-          <Link to="/contact">Kontakt</Link>
+          <Link to="/user">Profil</Link>
         </p>
         <button
           onClick={logout}
