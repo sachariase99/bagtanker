@@ -19,7 +19,7 @@ const Nyheder = () => {
 
   return (
     <div className="flex flex-col h-full ml-24">
-      <h1 className="text-5xl py-4">Nyheder</h1>
+      <h1 className="text-5xl py-4 mt-8">Nyheder</h1>
       <div className="w-[721px] h-[527px] bg-[#323540] bg-opacity-80">
         <ul>
           {limitedNews.map((item) => {
