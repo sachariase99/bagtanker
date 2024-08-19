@@ -64,7 +64,7 @@ const Burgermenu = () => {
                 <Link to="/">Forside</Link>
               </li>
               <li className="mb-4">
-                <Link to="/">Produkter</Link>
+                <Link to="/rundstykker">Produkter</Link>
               </li>
               <li className="mb-4">
                 <Link to="/news">Nyheder</Link>
