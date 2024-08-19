@@ -26,11 +26,8 @@ const useNews = () => {
           `);
 
         if (newsError) {
-          console.error('Error fetching news:', newsError.message);
           throw newsError;
         }
-
-        console.log('News fetched successfully:', newsData);
 
         // Fetch image details
         const imageIds = newsData.map(item => item.image_id).filter(id => id);
@@ -40,11 +37,8 @@ const useNews = () => {
           .in('id', imageIds);
 
         if (imagesError) {
-          console.error('Error fetching images:', imagesError.message);
           throw imagesError;
         }
-
-        console.log('Images fetched successfully:', imagesData);
 
         // Create a map of image IDs to filenames
         const imagesMap = imagesData.reduce((acc, image) => {
@@ -60,11 +54,9 @@ const useNews = () => {
 
         setNews(newsWithImages);
       } catch (error) {
-        console.error('Error in fetchNews:', error.message);
         setError(error.message);
       } finally {
         setLoading(false);
-        console.log('Loading state updated to false.');
       }
     };
 
