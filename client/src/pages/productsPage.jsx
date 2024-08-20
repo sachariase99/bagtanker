@@ -1,12 +1,15 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useProducts from "../hooks/useProducts";
 import { CiHeart } from "react-icons/ci";
 
-const Rundstykker = () => {
+const ProductsPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState("Sorter");
-  const { products, error, loading } = useProducts();
+  const { productType } = useParams(); // Get the type of product from the URL
+
+  // Pass the selected sort option to the useProducts hook
+  const { products, error, loading } = useProducts(productType, selected);
 
   if (loading)
     return (
@@ -27,7 +30,6 @@ const Rundstykker = () => {
 
   const options = ["Sorter", "Popularitet", "A - Z"];
 
-  // Truncate text function
   const truncateText = (text, maxWords) => {
     const words = text.split(" ");
     if (words.length > maxWords) {
@@ -40,12 +42,14 @@ const Rundstykker = () => {
     <div>
       <div className="flex justify-between">
         <p>
-          Du er her: <Link to="/">Home</Link> /
-          <Link to="/rundstykker">Produkter</Link>
+          Du er her: <Link to="/">Home</Link> /{" "}
+          <Link to={`/${productType}`}>{productType}</Link>
         </p>
       </div>
       <div className="flex justify-between items-center">
-        <h2 className="text-4xl font-bold mb-6 mt-8">Rundstykker</h2>
+        <h2 className="text-4xl font-bold mb-6 mt-8">
+          {productType.charAt(0).toUpperCase() + productType.slice(1)}
+        </h2>
         <div className="relative w-[240px]">
           <button
             onClick={toggleDropdown}
@@ -62,7 +66,7 @@ const Rundstykker = () => {
             >
               <path
                 fillRule="evenodd"
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                 clipRule="evenodd"
               />
             </svg>
@@ -103,12 +107,15 @@ const Rundstykker = () => {
                 <p className="font-bold text-[22px]">{product.title}</p>
                 <p className="text-lg">{truncateText(product.teaser, 26)}</p>
                 <div className="flex justify-between items-center">
-                  <button className="py-2 px-4 bg-[#D89F5F] text-white text-xl rounded-lg">
-                    Læs mere
-                  </button>
+                  <Link to={`/product/${product.id}`}>
+                    <button className="py-2 px-4 bg-[#D89F5F] text-white text-xl rounded-lg">
+                      Læs mere
+                    </button>
+                  </Link>
                   <div className="flex gap-2">
-                    <p>{product.amount}</p>
-                    <button><CiHeart className="text-2xl"/></button>
+                    <button>
+                      <CiHeart className="text-2xl" />
+                    </button>
                   </div>
                 </div>
               </div>
@@ -120,4 +127,4 @@ const Rundstykker = () => {
   );
 };
 
-export default Rundstykker;
+export default ProductsPage;
