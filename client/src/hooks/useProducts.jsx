@@ -24,7 +24,6 @@ const useProducts = (productType, sortOption) => {
         // Determine categories to query based on the mapping
         const categoriesToFetch = categoryMapping[formattedProductType] || [formattedProductType];
 
-        console.log(`Fetching categories: ${categoriesToFetch.join(', ')}`);
 
         // Fetch category IDs based on the titles
         const { data: categories, error: categoryError } = await supabase
@@ -44,8 +43,6 @@ const useProducts = (productType, sortOption) => {
 
         const categoryIds = categories.map(category => category.id);
 
-        console.log(`Found category IDs: ${categoryIds.join(', ')}`);
-
         // Fetch products based on category IDs
         const { data: productRel, error: productRelError } = await supabase
           .from("category_product_rel")
@@ -64,8 +61,6 @@ const useProducts = (productType, sortOption) => {
           setProducts([]);
           return;
         }
-
-        console.log(`Fetched products: ${JSON.stringify(productsData)}`);
 
         // Fetch image details
         const { data: imagesData, error: imagesError } = await supabase
