@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSupabase } from '../supabase/supabaseClient';
 
 const useUserComments = (userId) => {
@@ -7,44 +7,47 @@ const useUserComments = (userId) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        setLoading(true);
+  const fetchComments = useCallback(async () => {
+    if (!userId) {
+      setLoading(false);
+      return;
+    }
 
-        // Fetch comments for the user
-        const { data: commentsData, error: commentsError } = await supabase
-          .from('user_comments')
-          .select(`
-            id,
-            title,
-            comment,
-            user_id,
-            product_id,
-            created_at,
-            is_active,
-            firstname,
-            lastname
-          `)
-          .eq('user_id', userId);
+    try {
+      setLoading(true);
 
-        if (commentsError) {
-          throw commentsError;
-        }
+      const { data: commentsData, error: commentsError } = await supabase
+        .from('user_comments')
+        .select(`
+          id,
+          title,
+          comment,
+          user_id,
+          product_id,
+          created_at,
+          is_active,
+          firstname,
+          lastname
+        `)
+        .eq('user_id', userId);
 
-        // Set the fetched comments to state
-        setComments(commentsData);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
+      if (commentsError) {
+        throw commentsError;
       }
-    };
 
-    fetchComments();
+      setComments(commentsData);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   }, [supabase, userId]);
 
-  return { comments, error, loading };
+  useEffect(() => {
+    fetchComments();
+  }, [fetchComments]);
+
+  return { comments, error, loading, refetch: fetchComments }; // Add refetch
 };
 
 export default useUserComments;
