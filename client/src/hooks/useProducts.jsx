@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { useSupabase } from '../supabase/supabaseClient';
 
 const categoryMapping = {
@@ -94,7 +93,6 @@ const useProducts = (productType, sortOption) => {
 
         setProducts(sortedProducts);
       } catch (error) {
-        console.error(error.message);
         setError(error.message);
       } finally {
         setLoading(false);
