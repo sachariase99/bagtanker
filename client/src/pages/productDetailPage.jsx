@@ -71,8 +71,8 @@ const ProductDetailPage = () => {
                 Antal: {product.amount}
               </p>
 
-              {/* Ingredients List */}
-              <div className="">
+              {/* Ingredients */}
+              <div>
                 <ul>
                   {ingredients.map((item) => (
                     <li key={item.ingredient_id} className="mb-2 border-b-[2px] py-3 px-4">
@@ -86,14 +86,14 @@ const ProductDetailPage = () => {
         )}
         <p className="text-[28px] font-bold">Price: {product.price} DKK</p>
   
-        {/* Comments Section */}
+        {/* Comments */}
         <div className="mt-8">
           <h2 className="text-4xl font-bold mb-4">Kommentarer</h2>
   
-          {/* Render "Skriv kommentar" button only if the user is logged in */}
+          {/* Only show 'Skriv kommentar' if the user is logged in */}
           {isLoggedIn && (
             <div
-              className="flex items-center cursor-pointer"
+              className="flex items-center cursor-pointer mb-4"
               onClick={() => setIsModalOpen(true)}
             >
               <p>Skriv kommentar</p>
@@ -122,7 +122,7 @@ const ProductDetailPage = () => {
               ))}
             </ul>
           ) : (
-            <p>No comments yet. Be the first to comment!</p>
+            <p className="text-[14px]">No comments yet. Be the first to comment!</p>
           )}
         </div>
   
