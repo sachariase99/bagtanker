@@ -1,31 +1,23 @@
-// src/hooks/useProductDetail.js
 import { useState, useEffect } from "react";
-import { useSupabase } from '../supabase/supabaseClient';
+import { useSupabase } from "../supabase/supabaseClient";
 
 const useProductDetail = (productId) => {
   const { supabase } = useSupabase();
   const [product, setProduct] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchProductDetail = async () => {
       try {
         setLoading(true);
 
         // Fetch product details
         const { data: productData, error: productError } = await supabase
           .from("products")
-          .select(`
-            id,
-            image_id,
-            title,
-            teaser,
-            description,
-            duration,
-            amount,
-            price
-          `)
+          .select("*")
           .eq("id", productId)
           .single();
 
@@ -34,23 +26,55 @@ const useProductDetail = (productId) => {
         }
 
         // Fetch image details
-        const { data: imagesData, error: imagesError } = await supabase
-          .from("images")
-          .select("id, filename")
-          .eq("id", productData.image_id)
-          .single();
+        if (productData.image_id) {
+          const { data: imageData, error: imageError } = await supabase
+            .from("images")
+            .select("filename")
+            .eq("id", productData.image_id)
+            .single();
 
-        if (imagesError) {
-          throw new Error(`Images fetch error: ${imagesError.message}`);
+          if (imageError) {
+            throw new Error(`Image fetch error: ${imageError.message}`);
+          }
+
+          productData.imageFilename = imageData.filename;
         }
 
-        // Combine product with its corresponding image filename
-        const productWithImage = {
-          ...productData,
-          imageFilename: imagesData.filename || null,
-        };
+        setProduct(productData);
 
-        setProduct(productWithImage);
+        // Fetch ingredients and units
+        const { data: ingredientsData, error: ingredientsError } = await supabase
+          .from("ingredients_product_rel")
+          .select(`
+            amount,
+            ordernum,
+            ingredient_id,
+            unit_id,
+            ingredients (title),
+            units (abbreviation)
+          `)
+          .eq("product_id", productId)
+          .order("ordernum", { ascending: true });
+
+        if (ingredientsError) {
+          throw new Error(`Ingredients fetch error: ${ingredientsError.message}`);
+        }
+        
+
+        setIngredients(ingredientsData);
+
+        // Fetch comments related to the product
+        const { data: commentsData, error: commentsError } = await supabase
+          .from("user_comments")
+          .select("*")
+          .eq("product_id", productId)
+          .order("created_at", { ascending: false });
+
+        if (commentsError) {
+          throw new Error(`Comments fetch error: ${commentsError.message}`);
+        }
+
+        setComments(commentsData);
       } catch (error) {
         console.error(error.message);
         setError(error.message);
@@ -59,12 +83,10 @@ const useProductDetail = (productId) => {
       }
     };
 
-    if (productId) {
-      fetchProduct();
-    }
+    fetchProductDetail();
   }, [productId, supabase]);
 
-  return { product, loading, error };
+  return { product, comments, ingredients, error, loading };
 };
 
 export default useProductDetail;
