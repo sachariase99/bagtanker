@@ -13,10 +13,9 @@ const useProductDetail = (productId) => {
     try {
       setLoading(true);
 
-      // Fetch product details
       const { data: productData, error: productError } = await supabase
         .from("products")
-        .select("*")
+        .select("*, category_product_rel ( categories ( title ) )")
         .eq("id", productId)
         .single();
 
@@ -24,7 +23,9 @@ const useProductDetail = (productId) => {
         throw new Error(`Product fetch error: ${productError.message}`);
       }
 
-      // Fetch image details
+      const categoryTitle = productData?.category_product_rel?.[0]?.categories?.title || "Unknown Category";
+      productData.productType = categoryTitle;
+
       if (productData.image_id) {
         const { data: imageData, error: imageError } = await supabase
           .from("images")
@@ -41,7 +42,6 @@ const useProductDetail = (productId) => {
 
       setProduct(productData);
 
-      // Fetch ingredients and units
       const { data: ingredientsData, error: ingredientsError } = await supabase
         .from("ingredients_product_rel")
         .select(`
@@ -61,7 +61,6 @@ const useProductDetail = (productId) => {
 
       setIngredients(ingredientsData);
 
-      // Fetch comments related to the product
       const { data: commentsData, error: commentsError } = await supabase
         .from("user_comments")
         .select("*")
@@ -74,7 +73,6 @@ const useProductDetail = (productId) => {
 
       setComments(commentsData);
     } catch (error) {
-      console.error(error.message);
       setError(error.message);
     } finally {
       setLoading(false);
@@ -83,7 +81,6 @@ const useProductDetail = (productId) => {
 
   const refreshComments = async () => {
     try {
-      // Fetch comments related to the product
       const { data: commentsData, error: commentsError } = await supabase
         .from("user_comments")
         .select("*")
@@ -96,7 +93,6 @@ const useProductDetail = (productId) => {
 
       setComments(commentsData);
     } catch (error) {
-      console.error(error.message);
       setError(error.message);
     }
   };

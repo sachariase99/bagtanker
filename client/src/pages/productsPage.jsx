@@ -43,7 +43,7 @@ const ProductsPage = () => {
       <div className="flex justify-between">
         <p>
           Du er her: <Link to="/">Home</Link> /{" "}
-          <Link to={`/${productType}`}>{productType}</Link>
+          <Link className="capitalize" to={`/${productType}`}>{productType}</Link>
         </p>
       </div>
       <div className="flex justify-between items-center">
@@ -87,7 +87,7 @@ const ProductsPage = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-8">
+      <div className="grid xl:grid-cols-2 gap-8">
         {products.map((product) => {
           const imageUrl = product.imageFilename ? product.imageFilename : null;
 

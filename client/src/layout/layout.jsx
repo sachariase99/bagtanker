@@ -59,7 +59,7 @@ const Layout = () => {
       </header>
 
       {/* Main content area */}
-      <main className="flex-grow w-[1200px] m-auto">
+      <main className="flex-grow w-[1200px] m-auto bg-white">
         <Outlet />
       </main>
 

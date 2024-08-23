@@ -50,7 +50,7 @@ const Burgermenu = () => {
           isOpen ? "translate-x-0" : "translate-x-full"
         } transition-transform duration-300 ease-in-out z-[2]`}
       >
-        <div className="p-4 relative">
+        <div className="p-4 relative z-20">
           <button
             onClick={toggleMenu}
             className="text-white absolute right-[80px] top-[94px]"
@@ -58,7 +58,7 @@ const Burgermenu = () => {
             <span className="block w-8 h-[4px] bg-white absolute rotate-45"></span>
             <span className="block w-8 h-[4px] bg-white absolute -rotate-45"></span>
           </button>
-          <nav className="mt-36 ml-12 text-xl leading-loose text-white">
+          <nav className="mt-36 ml-12 text-xl leading-loose text-white z-[9999]">
             <ul>
               <li className="mb-4">
                 <Link to="/">Forside</Link>

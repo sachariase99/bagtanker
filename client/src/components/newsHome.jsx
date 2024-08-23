@@ -22,21 +22,21 @@ const NewsHome = () => {
   const limitedNews = news.slice(0, 3);
 
   return (
-    <div className="flex flex-col h-full ml-24">
+    <div className="flex flex-col h-full ml-24 mr-24 lg:mr-0">
       <h1 className="text-5xl py-4 mt-8">Nyheder</h1>
-      <div className="w-[721px] h-[527px] bg-[#323540] bg-opacity-80 rounded-lg">
+      <div className="lg:w-1/2 h-full bg-[#323540] bg-opacity-80 rounded-lg mb-8">
         <ul>
           {limitedNews.map((item) => {
             const imageUrl = item.imageFilename ? item.imageFilename : null;
 
             return (
               <Link to={`/news/${item.id}`} key={item.id} className="text-white block">
-                <li className="my-8 mx-8 flex">
+                <li className="my-8 mx-8 flex flex-col xl:flex-row">
                   {imageUrl ? (
                     <img
                       src={imageUrl}
                       alt={item.title}
-                      className="w-[195px] h-[130px] border-[1px] border-white rounded-md mr-8"
+                      className="w-full xl:w-[195px] xl:h-[130px] border-[1px] border-white rounded-md mr-8"
                       onError={() =>
                         console.error(`Image failed to load: ${imageUrl}`)
                       }
@@ -44,7 +44,7 @@ const NewsHome = () => {
                   ) : (
                     <p>No image available</p>
                   )}
-                  <div className="leading-loose">
+                  <div className="leading-loose pt-2 xl:pt-0">
                     <p className="font-thin text-base leading-none">
                       {formatDate(item.created_at)}:
                     </p>

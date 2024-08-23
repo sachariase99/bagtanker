@@ -25,6 +25,7 @@ const AppRoutes = () => {
           <Route path="/news" element={<News />} />
           <Route path="/news/:id" element={<NewsDetail />} />
 
+
           {/* Map all product-related routes to the same component */}
           <Route path="/:productType" element={<ProductsPage />} />
           <Route path="/product/:productId" element={<ProductDetailPage />} /> {/* Add this route */}

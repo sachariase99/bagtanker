@@ -30,17 +30,16 @@ const Header = () => {
 
   return (
     <header
-      className={`relative p-8 ${
-        isHomePage ? "h-screen max-h-screen" : "h-auto"
-      }`}
+      className={`relative w-full ${isHomePage ? "min-h-screen" : "h-auto"}`}
       style={{
         backgroundImage: `url(${images[currentImageIndex]})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
+        backgroundAttachment: "fixed", // Fix the background image
         transition: "background-image 1s ease-in-out",
       }}
     >
-      <nav className="flex items-center justify-between">
+      <nav className="relative flex items-center justify-between p-8 z-50">
         <Link to="/">
           <img src={Logo} alt="Logo" />
         </Link>
@@ -48,12 +47,12 @@ const Header = () => {
       </nav>
 
       {isHomePage && (
-        <div>
+        <div className="relative z-10">
           <NewsHome />
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+          <div className="fixed rotate-90 top-1/2 -right-[25rem] transform -translate-x-1/2 z-10">
             <div className="flex justify-center space-x-4">
               {images.map((_, index) => (
-                <label key={index} className="relative">
+                <label key={index} className="relative z-[1] hidden lg:block">
                   <input
                     type="radio"
                     name="background"
