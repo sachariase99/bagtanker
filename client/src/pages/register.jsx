@@ -3,90 +3,87 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSupabase } from "../supabase/supabaseClient";
 
 const RegisterPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
-  const { supabase } = useSupabase();
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [email, setEmail] = useState(""); // State for email input
+  const [password, setPassword] = useState(""); // State for password input
+  const [error, setError] = useState(null); // State for error messages
+  const [successMessage, setSuccessMessage] = useState(null); // State for success messages
+  const { supabase } = useSupabase(); // Access Supabase client
+  const navigate = useNavigate(); // Hook for navigation
 
-  // Handle registration
+  // Handle form submission
   const handleRegister = async (e) => {
-    e.preventDefault();
-    setError(null);
-    setSuccessMessage(null);
+    e.preventDefault(); // Prevent default form submission
+    setError(null); // Clear previous errors
+    setSuccessMessage(null); // Clear previous success messages
 
     try {
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
+      const { error } = await supabase.auth.signUp({ email, password });
 
       if (error) {
-        setError(error.message);
+        setError(error.message); // Set error message if registration fails
       } else {
         setSuccessMessage("Registration successful! Redirecting to login...");
         setTimeout(() => {
-          navigate("/login"); // Redirect to login page after successful registration
-        }, 2000); // Redirect after 2 seconds
+          navigate("/login"); // Redirect to login after 2 seconds
+        }, 2000);
       }
-    } catch (error) {
-      setError("Error registering. Please try again.");
+    } catch {
+      setError("Error registering. Please try again."); // Set error message for any other errors
     }
   };
 
   return (
-    <div>
-      <div className="w-[500px]">
-        <p>
-          Du er her: <Link to="/">Home</Link> / <Link to="/register">Registrer</Link>
-        </p>
-        <h2 className="text-4xl font-bold mb-4 mt-8">Registrer</h2>
-        <p className="text-base mb-3">
-          Indtast og send email og password for at registrere
-        </p>
-        <form onSubmit={handleRegister} className="flex flex-col">
-          {error && <p style={{ color: "red" }}>{error}</p>}
-          {successMessage && (
-            <p className="text-green absolute top-2 left-1/2 -translate-x-1/2 bg-[#c2c2c2] py-2 px-4 z-50">
-              {successMessage}
-            </p>
-          )}
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            placeholder="Indtast din email"
-            className="bg-[#ececec] px-8 py-4 w-full mb-2 outline-none rounded-lg"
-          />
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            minLength="6"
-            placeholder="Indtast dit password"
-            className="bg-[#ececec] px-8 py-4 w-full outline-none rounded-lg"
-          />
-          <div className="flex justify-end items-center mt-6">
-            <p>
-              Allerede registreret?{" "}
-              <Link to="/login" className="text-blue-400 underline">
-                Login
-              </Link>
-            </p>
-            <button
-              type="submit"
-              className="bg-[#5F567B] justify-start py-[7px] px-[57px] ml-3 uppercase font-light rounded-lg text-lg text-white"
-            >
-              Registrer
-            </button>
-          </div>
-        </form>
-      </div>
+    <div className="w-[500px] mx-auto my-8 p-4 border border-gray-300 rounded-lg shadow-md">
+      {/* Breadcrumb Navigation */}
+      <p>
+        Du er her: <Link to="/">Home</Link> / <Link to="/register">Registrer</Link>
+      </p>
+      <h2 className="text-4xl font-bold mb-4 mt-8">Registrer</h2>
+      <p className="text-base mb-3">Indtast og send email og password for at registrere</p>
+      <form onSubmit={handleRegister} className="flex flex-col">
+        {/* Display error message if any */}
+        {error && <p className="text-red-500">{error}</p>}
+        {/* Display success message if any */}
+        {successMessage && (
+          <p className="text-green-500 bg-gray-200 py-2 px-4 rounded-md">
+            {successMessage}
+          </p>
+        )}
+        {/* Email input */}
+        <input
+          id="email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          placeholder="Indtast din email"
+          className="bg-[#ececec] px-4 py-2 w-full mb-2 outline-none rounded-lg"
+        />
+        {/* Password input */}
+        <input
+          id="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          minLength="6"
+          placeholder="Indtast dit password"
+          className="bg-[#ececec] px-4 py-2 w-full outline-none rounded-lg"
+        />
+        {/* Submit button and login link */}
+        <div className="flex justify-between items-center mt-6">
+          <p>
+            Allerede registreret?{" "}
+            <Link to="/login" className="text-blue-400 underline">Login</Link>
+          </p>
+          <button
+            type="submit"
+            className="bg-[#5F567B] py-2 px-6 rounded-lg text-lg text-white"
+          >
+            Registrer
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

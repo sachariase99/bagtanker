@@ -4,6 +4,7 @@ import Header from "../components/header";
 import Nav from "../components/nav";
 import { useEffect } from "react";
 
+// Mapping for static page titles
 const pageTitles = {
   "/": "Home Page",
   "/home": "Home Page",
@@ -13,9 +14,9 @@ const pageTitles = {
   "/contact": "Contact Us",
   "/news": "News Page",
   "/about": "About Us",
-  // Define other static routes
 };
 
+// Function to generate dynamic page titles
 const getDynamicTitle = (pathname, params) => {
   if (pathname.startsWith("/news/")) {
     return `News Detail`;
@@ -24,30 +25,30 @@ const getDynamicTitle = (pathname, params) => {
     return `Product Detail`;
   }
   if (pathname.startsWith("/")) {
-    return `Product Category - ${params.productType || ''}`; // Safeguard against undefined
+    return `Product Category - ${params.productType || ''}`;
   }
   return "Default Title";
 };
 
 const Layout = () => {
-  const location = useLocation();
+  const location = useLocation(); // Get current location from react-router
 
-  // Check if the current route is the home page
+  // Determine if the current page is the home page
   const isHomePage = location.pathname === "/home" || location.pathname === "/";
 
-  // Extract and decode route parameters from the pathname
+  // Extract path segments from the current URL
   const pathSegments = location.pathname.split('/').filter(Boolean);
   const params = {
-    id: decodeURIComponent(pathSegments[2]), // For /news/:id
-    productId: decodeURIComponent(pathSegments[2]), // For /product/:productId
-    productType: decodeURIComponent(pathSegments[0]), // For /:productType
+    id: decodeURIComponent(pathSegments[2]),
+    productId: decodeURIComponent(pathSegments[2]),
+    productType: decodeURIComponent(pathSegments[0]),
   };
 
-  // Set page title based on the current route
   useEffect(() => {
+    // Determine the title based on the current path
     const path = location.pathname;
     const title = pageTitles[path] || getDynamicTitle(path, params);
-    document.title = title;
+    document.title = title; // Set the document title
   }, [location.pathname]);
 
   return (
@@ -55,12 +56,12 @@ const Layout = () => {
       {/* Sticky navbar */}
       <header>
         <Header />
-        {!isHomePage && <Nav />} {/* Conditionally render Nav */}
+        {!isHomePage && <Nav />}
       </header>
 
       {/* Main content area */}
       <main className="flex-grow w-[1200px] m-auto bg-white">
-        <Outlet />
+        <Outlet /> {/* Render the matched child route component */}
       </main>
 
       {/* Footer at the bottom */}

@@ -28,7 +28,7 @@ const AppRoutes = () => {
 
           {/* Map all product-related routes to the same component */}
           <Route path="/:productType" element={<ProductsPage />} />
-          <Route path="/product/:productId" element={<ProductDetailPage />} /> {/* Add this route */}
+          <Route path="/product/:productId" element={<ProductDetailPage />} />
         </Route>
       </Routes>
     </Router>
