@@ -56,7 +56,7 @@ const UserPage = () => {
       {error && <p className="text-red-500">Error: {error}</p>}
 
       {/* Comments List */}
-      <div className="grid grid-cols-4 gap-4 w-full max-w-4xl mx-auto">
+      <div className="grid grid-cols-4 gap-4 w-full max-w-4xl">
         <div className="col-span-2">
           <h4 className="text-base font-bold">Titel</h4>
         </div>
@@ -72,7 +72,7 @@ const UserPage = () => {
         comments.map((comment) => (
           <div
             key={comment.id}
-            className="grid grid-cols-4 gap-4 w-full max-w-4xl mx-auto border-t-2 border-black py-2"
+            className="grid grid-cols-4 gap-4 w-full max-w-4xl border-t-2 border-black py-2"
           >
             <div className="col-span-2">
               <p>{comment.title}</p>
@@ -80,7 +80,7 @@ const UserPage = () => {
             <div className="col-span-1">
               <p>{new Date(comment.created_at).toLocaleDateString("da-DK")}</p>
             </div>
-            <div className="col-span-1 flex items-center justify-center">
+            <div className="col-span-1">
               <button
                 onClick={() => handleDelete(comment.id)}
                 className="text-blue-500 hover:text-blue-700"
